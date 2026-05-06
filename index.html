@@ -105,17 +105,19 @@
         .speaker-btn {
             background: none;
             border: none;
-            font-size: 1.5em;
+            font-size: 1.3em;
             cursor: pointer;
             color: var(--speaker-color);
             transition: 0.2s;
             padding: 5px 10px;
             border-radius: 50%;
+            opacity: 0.8;
         }
 
         .speaker-btn:hover { 
             color: var(--speaker-hover); 
             transform: scale(1.1);
+            opacity: 1;
         }
 
         .btn {
@@ -174,10 +176,13 @@
         .correct-ans { color: #6D9E7D; font-weight: bold; font-size: 1.1em;}
         .wrong-ans { color: #C27A76; text-decoration: line-through; margin-right: 10px;}
 
-        /* 小動物裝飾 */
+        /* 首頁 Q版小圖案裝飾 */
         .decoration {
-            font-size: 3em;
+            font-size: 3.5em;
             margin: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
     </style>
 </head>
@@ -185,9 +190,9 @@
 
 <div class="container" id="quiz-container">
     <div id="start-screen">
-        <div class="decoration">🦉 🌕 🐇</div>
+        <div class="decoration">🚀 🌕 🧑‍🚀</div>
         <h1>月亮知識大挑戰</h1>
-        <p>準備好測試你對月亮的了解嗎？<br>我們每次會抽出 10 道有趣的題目喔！</p>
+        <p>準備好測試你對月亮的了解嗎？<br>我們每次會隨機抽出 10 道題目喔！</p>
         <button class="btn" onclick="startQuiz()">🌟 開始挑戰</button>
     </div>
 
@@ -195,7 +200,7 @@
         <div class="progress">第 <span id="current-index">1</span> 題 / 共 10 題</div>
         <div class="question-box">
             <span id="question-text"></span>
-            <button class="speaker-btn" id="q-speaker" title="唸給我聽">🔊</button>
+            <button class="speaker-btn" id="q-speaker" title="唸給我聽">📢</button>
         </div>
         <div id="options-container"></div>
     </div>
@@ -262,14 +267,14 @@ function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
 
-// 安全的語音朗讀功能：先取消前一次朗讀，避免卡住
+// 安全的語音朗讀功能 (語速恢復正常)
 function speakText(text) {
     window.speechSynthesis.cancel(); 
     setTimeout(() => {
         const msg = new SpeechSynthesisUtterance();
         msg.text = text;
         msg.lang = 'zh-TW';
-        msg.rate = 0.85; // 放慢一點適合兒童聽
+        // 移除 rate 設定，恢復系統預設正常語速
         window.speechSynthesis.speak(msg);
     }, 50);
 }
@@ -310,7 +315,7 @@ function showQuestion() {
         
         const btn = document.createElement('button');
         btn.className = 'speaker-btn';
-        btn.innerText = '🔊';
+        btn.innerText = '📢';  // 簡潔的喇叭圖示
         btn.title = '唸給我聽';
         btn.onclick = (e) => {
             e.stopPropagation(); // 防止點擊喇叭時選中答案
