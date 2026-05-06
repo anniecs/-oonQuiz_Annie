@@ -48,7 +48,7 @@
         h1 { 
             color: #7B8B7F; 
             font-size: 2.2em; 
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         p {
@@ -175,24 +175,14 @@
 
         .correct-ans { color: #6D9E7D; font-weight: bold; font-size: 1.1em;}
         .wrong-ans { color: #C27A76; text-decoration: line-through; margin-right: 10px;}
-
-        /* 首頁 Q版小圖案裝飾 */
-        .decoration {
-            font-size: 3.5em;
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
     </style>
 </head>
 <body>
 
 <div class="container" id="quiz-container">
     <div id="start-screen">
-        <div class="decoration">🚀 🌕 🧑‍🚀</div>
         <h1>月亮知識大挑戰</h1>
-        <p>準備好測試你對月亮的了解嗎？<br>我們每次會隨機抽出 10 道題目喔！</p>
+        <p>準備好測試你對月亮的了解嗎？<br>快跟 Annie 一起玩月亮吧！</p>
         <button class="btn" onclick="startQuiz()">🌟 開始挑戰</button>
     </div>
 
@@ -206,7 +196,6 @@
     </div>
 
     <div id="result">
-        <div class="decoration">🎉 🏆 🎉</div>
         <h1>挑戰結束囉！</h1>
         <h2 id="final-score" style="font-size: 2em; color: #7B8B7F;"></h2>
         <button class="btn" onclick="showMistakeBook()">📖 查看錯題本</button>
@@ -274,7 +263,6 @@ function speakText(text) {
         const msg = new SpeechSynthesisUtterance();
         msg.text = text;
         msg.lang = 'zh-TW';
-        // 移除 rate 設定，恢復系統預設正常語速
         window.speechSynthesis.speak(msg);
     }, 50);
 }
@@ -363,7 +351,7 @@ function showMistakeBook() {
     list.innerHTML = '';
     
     if (mistakes.length === 0) {
-        list.innerHTML = '<h2>🎉 太厲害了！你全部都答對囉！💯</h2>';
+        list.innerHTML = '<h2>太厲害了！你全部都答對囉！💯</h2>';
     } else {
         mistakes.forEach((m, idx) => {
             const item = document.createElement('div');
