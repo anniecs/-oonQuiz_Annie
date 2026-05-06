@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌙 月亮知識大挑戰</title>
+    <style>
+        :root {
+            /* 莫蘭迪色系 */
+            --bg-color: #E6E2D8;       /* 燕麥奶茶色 (背景) */
+            --card-bg: #FAFAF7;        /* 柔和白 (卡片) */
+            --text-color: #5C5752;     /* 深灰褐 (文字) */
+            --btn-primary: #9BB4A7;    /* 莫蘭迪綠 (主按鈕) */
+            --btn-hover: #86A092;      /* 莫蘭迪綠(深) */
+            --btn-secondary: #A9B5C9;  /* 莫蘭迪藍 (次按鈕) */
+            --option-bg: #F0EFEA;      /* 淺米灰 (選項) */
+            --option-border: #D6D2C4;  /* 灰褐邊框 */
+            --option-hover: #E8EDE9;   /* 淺綠 (選項懸停) */
+            --speaker-color: #C09A98;  /* 莫蘭迪粉 (喇叭) */
+            --speaker-hover: #A8817F;  /* 莫蘭迪粉(深) */
+            --danger-bg: #F4E8E7;      /* 淺粉 (錯題背景) */
+            --danger-border: #D19D99;  /* 莫蘭迪紅 (錯題邊框) */
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            max-width: 650px;
+            width: 100%;
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(92, 87, 82, 0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 { 
+            color: #7B8B7F; 
+            font-size: 2.2em; 
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .progress { 
+            background: #EAE6DF;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 25px; 
+            font-weight: bold; 
+            color: #8C867D; 
+            font-size: 1.1em;
+        }
+
+        .question-box { 
+            margin-bottom: 30px; 
+            font-size: 1.5em; 
+            line-height: 1.5; 
+            font-weight: bold;
+            color: #4A4642;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background: var(--option-bg);
+            border: 3px solid var(--option-border);
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #635E58;
+        }
+
+        .option:hover { 
+            background: var(--option-hover); 
+            border-color: var(--btn-primary); 
+            transform: translateY(-2px);
+        }
+
+        .speaker-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--speaker-color);
+            transition: 0.2s;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .speaker-btn:hover { 
+            color: var(--speaker-hover); 
+            transform: scale(1.1);
+        }
+
+        .btn {
+            background: var(--btn-primary);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(155, 180, 167, 0.4);
+        }
+
+        .btn:hover { 
+            background: var(--btn-hover); 
+            transform: translateY(-3px);
+        }
+
+        .btn-sec {
+            background: var(--btn-secondary);
+            box-shadow: 0 5px 15px rgba(169, 181, 201, 0.4);
+        }
+
+        .btn-sec:hover {
+            background: #8A98AF;
+        }
+
+        #result, #mistake-book { display: none; }
+
+        .mistake-item {
+            text-align: left;
+            background: var(--danger-bg);
+            padding: 20px;
+            border-left: 8px solid var(--danger-border);
+            margin: 15px 0;
+            border-radius: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: #FFFFFF;
+            color: var(--danger-border);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border: 1px solid var(--danger-border);
+        }
+
+        .correct-ans { color: #6D9E7D; font-weight: bold; font-size: 1.1em;}
+        .wrong-ans { color: #C27A76; text-decoration: line-through; margin-right: 10px;}
+
+        /* 小動物裝飾 */
+        .decoration {
+            font-size: 3em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="quiz-container">
+    <div id="start-screen">
+        <div class="decoration">🦉 🌕 🐇</div>
+        <h1>月亮知識大挑戰</h1>
+        <p>準備好測試你對月亮的了解嗎？<br>我們每次會抽出 10 道有趣的題目喔！</p>
+        <button class="btn" onclick="startQuiz()">🌟 開始挑戰</button>
+    </div>
+
+    <div id="quiz-screen" style="display:none;">
+        <div class="progress">第 <span id="current-index">1</span> 題 / 共 10 題</div>
+        <div class="question-box">
+            <span id="question-text"></span>
+            <button class="speaker-btn" id="q-speaker" title="唸給我聽">🔊</button>
+        </div>
+        <div id="options-container"></div>
+    </div>
+
+    <div id="result">
+        <div class="decoration">🎉 🏆 🎉</div>
+        <h1>挑戰結束囉！</h1>
+        <h2 id="final-score" style="font-size: 2em; color: #7B8B7F;"></h2>
+        <button class="btn" onclick="showMistakeBook()">📖 查看錯題本</button>
+        <br>
+        <button class="btn btn-sec" onclick="location.reload()">🔄 再玩一次</button>
+    </div>
+
+    <div id="mistake-book">
+        <h1>📖 錯題本</h1>
+        <p>把錯的題目學起來，下次就會更厲害！</p>
+        <div id="mistake-list"></div>
+        <button class="btn btn-sec" onclick="location.reload()">🏠 回首頁</button>
+    </div>
+</div>
+
+<script>
+// 題庫：包含題目、選項、正確答案索引，以及來自哪一頁
+const allQuestions = [
+    { q: "月球大約是在多久以前誕生的呢？", a: ["45 億年前", "1 萬年前", "100 年前", "昨天剛誕生"], c: 0, p: "第 15 頁" },
+    { q: "月球是怎麼形成的？", a: ["小行星撞擊地球產生的碎片聚集的", "外星人蓋出來的", "太陽掉下來的火球", "地球生出來的蛋"], c: 0, p: "第 15 頁" },
+    { q: "月球的碎片最後聚集成什麼形狀？", a: ["圓球體", "正方形", "三角形", "像星星的形狀"], c: 0, p: "第 15 頁" },
+    { q: "月亮在「小時候」是什麼組成的？", a: ["一堆小碎碎片", "一顆小綠豆", "一團軟軟的雲", "好喝的水滴"], c: 0, p: "第 15 頁" },
+    { q: "月亮會自己發光嗎？", a: ["不會，是反射太陽的光芒", "會，像螢火蟲一樣", "會，裡面有燈泡", "會，因為很熱所以發光"], c: 0, p: "第 16-17 頁" },
+    { q: "晚上看到一閃一閃，會自己發光的是什麼昆蟲？", a: ["螢火蟲", "蝴蝶", "螞蟻", "獨角仙"], c: 0, p: "第 16-17 頁" },
+    { q: "繪本中用什麼來比喻太陽照亮月球？", a: ["手電筒照著皮球", "火把點燃木頭", "車燈照路", "用鏡子照臉"], c: 0, p: "第 16-17 頁" },
+    { q: "太陽、地球、月球，相對來說誰不會移動位置？", a: ["太陽", "地球", "月球", "都會跑來跑去"], c: 0, p: "第 16-17 頁" },
+    { q: "為什麼月亮有時候像蛾眉月，有時候是滿月？", a: ["因為太陽光照在不同的地方", "因為月亮會變魔術", "因為雲朵把它切開了", "因為它每天都在長大跟縮小"], c: 0, p: "第 18-19 頁" },
+    { q: "當月亮看起來圓圓滿滿的時候叫什麼？", a: ["滿月", "新月", "上弦月", "殘月"], c: 0, p: "第 18-19 頁" },
+    { q: "當月亮完全看不見（黑黑的）時候叫什麼？", a: ["新月", "滿月", "盈凸月", "下弦月"], c: 0, p: "第 18-19 頁" },
+    { q: "白天也可以看到月亮嗎？", a: ["可以，當空氣乾淨的時候", "絕對不可能", "只有在下雨天才看得到", "只有早上 6 點看得到"], c: 0, p: "第 18-19 頁" },
+    { q: "月亮在白天的天空是什麼顏色時最容易看見？", a: ["藍色", "紅色", "黑色", "黃色"], c: 0, p: "第 18-19 頁" },
+    { q: "繪本中提到的「盈凸月」，是比半圓多還是少？", a: ["比半圓多", "比半圓少", "剛好一半", "完全平的"], c: 0, p: "第 18-19 頁" },
+    { q: "「下弦月」的形狀看起來像什麼？", a: ["半圓形", "細鉤形", "圓形", "愛心形"], c: 0, p: "第 18-19 頁" },
+    { q: "為什麼你走路時，月亮好像會一直跟著你？", a: ["因為它在很遠很遠的地方", "因為它很喜歡你", "因為你走得太慢了", "因為它有裝輪子"], c: 0, p: "第 24-25 頁" },
+    { q: "月球繞地球轉一圈時，它自己轉了幾圈？", a: ["剛好一圈", "轉了一百圈", "半圈", "完全沒有轉"], c: 0, p: "第 20-22 頁" },
+    { q: "為什麼我們總是只看到月球的同一面？", a: ["因為它繞地球轉一圈跟自己轉一圈的時間一樣", "因為它的背後是透明的", "因為它被黏住了", "因為它不敢轉過來"], c: 0, p: "第 20-22 頁" },
+    { q: "繪本中對月亮說「我會轉頭，你也會嗎？」的是什麼動物？", a: ["貓頭鷹", "小狗", "小魚", "兔子"], c: 0, p: "第 20-22 頁" },
+    { q: "月亮距離地球大約多遠？", a: ["38 萬公里", "100 公里", "5 萬公里", "走路10分鐘就到了"], c: 0, p: "第 24-25 頁" },
+    { q: "地球到月球的距離，中間可以塞進幾個地球？", a: ["30 個", "2 個", "100 個", "1 萬個"], c: 0, p: "第 24-25 頁" },
+    { q: "繪本中一邊奔跑一邊覺得月亮在跟著牠的是什麼動物？", a: ["小狗", "貓咪", "大象", "長頸鹿"], c: 0, p: "第 24-25 頁" },
+    { q: "在地球上 15 公斤的小朋友，到了月球大約變幾公斤？", a: ["2.5 公斤", "15 公斤不會變", "30 公斤變好重", "0 公斤會飛走"], c: 0, p: "第 26-27 頁" },
+    { q: "月球的引力（重量的感覺）大約是地球的幾分之幾？", a: ["六分之一", "一半", "百分之一", "沒有引力"], c: 0, p: "第 26-27 頁" },
+    { q: "在月球上跳高，會比在地球上跳得如何？", a: ["跳得更高", "跳不起來", "跳得更矮", "跟地球一模一樣"], c: 0, p: "第 26-27 頁" },
+    { q: "月球表面坑坑巴巴的痕跡是怎麼來的？", a: ["被太空中的岩石（隕石）撞到的", "月亮生病長水痘了", "外星人挖的洞", "自然長出來的"], c: 0, p: "第 26-27 頁" },
+    { q: "登陸月球為什麼一定要穿太空衣？", a: ["因為月球上面沒有空氣", "因為穿起來很帥", "因為月球上會下雪", "因為有可怕的怪獸"], c: 0, p: "第 26-27 頁" },
+    { q: "人類去月球要搭乘什麼交通工具？", a: ["火箭", "飛機", "高鐵", "熱氣球"], c: 0, p: "第 26-27 頁" },
+    { q: "繪本中跳得很高的是什麼動物的裝扮？", a: ["兔子", "青蛙", "袋鼠", "猴子"], c: 0, p: "第 26-27 頁" },
+    { q: "月球會繞著哪一個星球轉呢？", a: ["地球", "太陽", "火星", "木星"], c: 0, p: "第 20-22 頁" }
+];
+
+let quizQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let mistakes = [];
+
+// 隨機打亂陣列
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+// 安全的語音朗讀功能：先取消前一次朗讀，避免卡住
+function speakText(text) {
+    window.speechSynthesis.cancel(); 
+    setTimeout(() => {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'zh-TW';
+        msg.rate = 0.85; // 放慢一點適合兒童聽
+        window.speechSynthesis.speak(msg);
+    }, 50);
+}
+
+function startQuiz() {
+    quizQuestions = shuffle([...allQuestions]).slice(0, 10);
+    currentIdx = 0;
+    score = 0;
+    mistakes = [];
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('quiz-screen').style.display = 'block';
+    showQuestion();
+}
+
+function showQuestion() {
+    const qData = quizQuestions[currentIdx];
+    document.getElementById('current-index').innerText = currentIdx + 1;
+    
+    // 設置題目
+    document.getElementById('question-text').innerText = qData.q;
+    const speakerBtn = document.getElementById('q-speaker');
+    speakerBtn.onclick = () => speakText(qData.q);
+    
+    // 隨機選項並記錄正確答案的新位置
+    let options = qData.a.map((text, idx) => ({ text, isCorrect: idx === qData.c }));
+    options = shuffle(options);
+
+    const optionsDiv = document.getElementById('options-container');
+    optionsDiv.innerHTML = '';
+    
+    options.forEach(opt => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        
+        const textSpan = document.createElement('span');
+        textSpan.style.flex = "1";
+        textSpan.innerText = opt.text;
+        
+        const btn = document.createElement('button');
+        btn.className = 'speaker-btn';
+        btn.innerText = '🔊';
+        btn.title = '唸給我聽';
+        btn.onclick = (e) => {
+            e.stopPropagation(); // 防止點擊喇叭時選中答案
+            speakText(opt.text);
+        };
+
+        div.appendChild(textSpan);
+        div.appendChild(btn);
+        
+        div.onclick = () => checkAnswer(opt.isCorrect, opt.text, qData);
+        optionsDiv.appendChild(div);
+    });
+}
+
+function checkAnswer(isCorrect, selectedText, qData) {
+    if (isCorrect) {
+        score += 10;
+    } else {
+        mistakes.push({
+            q: qData.q,
+            your: selectedText,
+            correct: qData.a[qData.c],
+            page: qData.p
+        });
+    }
+    
+    currentIdx++;
+    if (currentIdx < 10) {
+        showQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    document.getElementById('quiz-screen').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('final-score').innerText = `總得分：${score} 分`;
+}
+
+function showMistakeBook() {
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('mistake-book').style.display = 'block';
+    const list = document.getElementById('mistake-list');
+    list.innerHTML = '';
+    
+    if (mistakes.length === 0) {
+        list.innerHTML = '<h2>🎉 太厲害了！你全部都答對囉！💯</h2>';
+    } else {
+        mistakes.forEach((m, idx) => {
+            const item = document.createElement('div');
+            item.className = 'mistake-item';
+            item.innerHTML = `
+                <div class="page-badge">出處：${m.page}</div><br>
+                <strong>Q${idx + 1}：${m.q}</strong><br>
+                <div style="margin-top: 10px;">
+                    <span class="wrong-ans">你的答案：${m.your}</span><br>
+                    <span class="correct-ans">✅ 正確答案：${m.correct}</span>
+                </div>
+            `;
+            list.appendChild(item);
+        });
+    }
+}
+</script>
+</body>
+</html>
